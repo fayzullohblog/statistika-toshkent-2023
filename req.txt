@@ -1,0 +1,9 @@
+asgiref==3.6.0
+Django==4.1.7
+Pillow==9.4.0
+PyPDF2==3.0.1
+sqlparse==0.4.3
+PyPDF2==3.0.1
+qrcode==7.4.2
+reportlab==3.6.12
+reportlab-qrcode==0.1.4

@@ -1,0 +1,4 @@
+./venv
+venv
+media
+db.sqlite3

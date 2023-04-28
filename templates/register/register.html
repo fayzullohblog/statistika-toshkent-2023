@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Form-v9 by Colorlib</title>
+	<!-- Mobile Specific Metas -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<!-- Font-->
+	<link rel="stylesheet" type="text/css" href="{% static 'css/register/css/nunito-font.css' %}">
+	<!-- Main Style Css -->
+    <link rel="stylesheet" href="{% static 'css/register/css/style.css' %}"/>
+	<style>
+		.form-v9-content{
+background-image: url("{% static 'css/register/images/form-v9.jpg' %}");
+		}
+	</style>
+</head>
+<body class="form-v9">
+	<div class="page-content">
+		<div class="form-v9-content" >
+
+
+			<form class="form-detail"  method="post" action="#" method="post">
+				{% csrf_token %}
+				{{ form.as_p }}				
+				<div class="form-row-last">
+					<input type="submit" class="register" value="Register">
+					<a href="{% url 'login' %}"><input type="button" name="register" value="Login"></a>
+				</div>
+				
+			</form>
+
+
+		</div>
+	</div>
+	
+</body><!-- This templates was made by Colorlib (https://colorlib.com) -->
+</html>
