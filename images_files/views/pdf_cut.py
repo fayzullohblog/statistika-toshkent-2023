@@ -17,7 +17,6 @@ class PdfCutDjangoViews(View):
         pdf_id=request.GET.get('pdf_id')
         
         pdf_file_instance = get_object_or_404(ImageFile, pk=pdf_id)
-        print('->',pdf_file_instance)
         imagefile=pdf_file_instance.image_pdf.path
         
         new_folder_name=str(pdf_file_instance.image_pdf).split('/')[1]
@@ -103,15 +102,16 @@ class PdfCutDjangoViews(View):
             for page in pdf_file.page_spliter():
                 saved_page = pdf_file.create_pdf(save_folder_path=new_folder, page=page)   
                 ImagePart.objects.create(imagefile=pdf_file_instance, oneimage=saved_page, title=f"{page+1}-page")
-            return render(request=request,template_name='pdf_cut.html',context=context)
-        exsist_file='Bu file aqlloqachon bazada mavjud va ko\'rib chiqlgan'
-            
-            
+
+
+            return render(request=request,template_name='pdf_cut.html')
         
+        image_part=pdf_file_instance.imageparts.all()
+        exsist_file='Bu file aqlloqachon bazada mavjud va ko\'rib chiqlgan'
 
-
-        context={'pdf_id':None,
-                 'exsist_file':exsist_file}
+        context={
+                'image_part':image_part,
+                 'exsist_file':exsist_file,}
         
         return render(request=request,template_name='pdf_cut.html',context=context)
     

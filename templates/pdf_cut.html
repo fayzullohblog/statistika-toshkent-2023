@@ -3,109 +3,60 @@
 
 {% block content %}
 <p>  {{ pdffile }}  </p>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Document</title>
-</head>
-<body>
 
-    <div class="content">
-    
-        <div class="container">
-          <h2 class="mb-5">Table #1</h2>
-    
-          <div class="table-responsive">
-    
-            <table class="table custom-table">
-              <thead>
-                <tr>
-                  <th scope="col">
-                    <label class="control control--checkbox">
-                      <input type="checkbox" class="js-check-all"/>
-                      <div class="control__indicator"></div>
-                    </label>
-                  </th>
-                  <th scope="col">Order</th>
-                  <th scope="col">Name</th>
-                  <th scope="col">Occupation</th>
-                  <th scope="col">Contact</th>
-                  <th scope="col">Education</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <th scope="row">
-                    <label class="control control--checkbox">
-                      <input type="checkbox"/>
-                      <div class="control__indicator"></div>
-                    </label>
-                  </th>
-                  <td>1392</td>
-                  <td>James Yates</td>
-                  <td>Web Designer</td>
-                  <td>+63 983 0962 971</td>
-                  <td>NY University</td>
-                </tr>
-                <tr>
-                  <th scope="row">
-                    <label class="control control--checkbox">
-                      <input type="checkbox"/>
-                      <div class="control__indicator"></div>
-                    </label>
-                  </th>
-                  <td>4616</td>
-                  <td>Matthew Wasil</td>
-                  <td>Graphic Designer</td>
-                  <td>+02 020 3994 929</td>
-                  <td>London College</td>
-                </tr>
-                <tr>
-                  <th scope="row">
-                    <label class="control control--checkbox">
-                      <input type="checkbox"/>
-                      <div class="control__indicator"></div>
-                    </label>
-                  </th>
-                  <td>9841</td>
-                  <td>Sampson Murphy</td>
-                  <td>Mobile Dev</td>
-                  <td>+01 352 1125 0192</td>
-                  <td>Senior High</td>
-                </tr>
-                <tr>
-                  <th scope="row">
-                    <label class="control control--checkbox">
-                      <input type="checkbox"/>
-                      <div class="control__indicator"></div>
-                    </label>
-                  </th>
-                  <td>9548</td>
-                  <td>Gaspar Semenov</td>
-                  <td>Illustrator</td>
-                  <td>+92 020 3994 929</td>
-                  <td>College</td>
-                </tr>
-                
-              </tbody>
-            </table>
+<section class="ftco-section">
+  <div class="container">
+     
+      <div class="row">
+          <div class="col-md-12">
+            
+              <div class="table-wrap">
+                <table class="table">
+
+
+                  <thead class="thead-primary">
+                    <tr>
+                      
+                      <th>Iaa</th>
+                      
+                    </tr>
+                      <tr>
+                      
+                      <th>Id</th>
+                      <th>Date</th>
+                      <th>Name</th>
+                      <th>State</th>
+                      <th>File</th>
+                      <th>Send</th>
+                    </tr>
+                  </thead>
+              
+                  
+<form action="{% url 'pdf_cut' %}" method="POST">
+{% csrf_token %}
+  <tbody>
+    {% for pdf in image_part %}
+    <tr>
+      
+      <th scope="row" class="scope" ><ol><li></li></ol></th>
+      <td>{{ pdf.created_date }}</td>
+      <td>{{ pdf.pdfs_name }}</td>
+      <td>{{ pdf.title }}</td>
+      <td><a href="http://127.0.0.1:8000/{{ pdf.oneimage.url }}">Open</a></td>
+      <td><a class="btn btn-primary" href="http://127.0.0.1:8000/pdf_cut/?pdf_id={{pdf.id}}">Share</a></td>
+      <!-- {% comment %} <td><button  class="btn btn-primary" type="button"> Share</button>  </td> {% endcomment %} -->
+
+    </tr>                    
+    {% endfor %}
+  </tbody>
+</form>
+
+                </table>
+              </div>
           </div>
-    
-    
-        </div>
-    
       </div>
-        
-        
-    
-        <script src="{% static 'css/pdf_cut/js/jquery-3.3.1.min.js' %}"></script>
-        <script src="{% static 'css/pdf_cut/js/popper.min.js' %}"></script>
-        <script src="{% static 'css/pdf_cut/js/bootstrap.min.js' %}"></script>
-        <script src="{% static 'css/pdf_cut/js/main.js' %}"></script>
-</body>
-</html>
+  </div>
+</section>
+
 {% endblock content %}
     
