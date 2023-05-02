@@ -6,14 +6,15 @@ from .manager import AccountManager
 # Create your models here.
 
 class Account(AbstractUser):
-    user=models.CharField(max_length=10,choices=UserChoices.choices,default=UserChoices.OWNER)
+    user=models.CharField(max_length=10,choices=UserChoices.choices,default=UserChoices.STAFF)
+    is_active=models.BooleanField(default=False)
     username=models.CharField(max_length=50,unique=True)
-    password=models.CharField(max_length=50)
+    password=models.CharField(max_length=100)
     email=models.EmailField(unique=True)
     first_name=models.CharField(max_length=50,null=True,blank=True)
     last_name=models.CharField(max_length=50,null=True,blank=True)
     
-    EMAIL_FIELD = "email"
+    EMAIL_FIELD = "password"
     USERNAME_FIELD='username'
     REQUIRED_FIELDS=['email']
 

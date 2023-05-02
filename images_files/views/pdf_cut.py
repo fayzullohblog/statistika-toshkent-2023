@@ -97,7 +97,9 @@ class PdfCutDjangoViews(View):
                     doc.save()
                     return watermark_file
                 
-            pdf_file = PdfParser(imagefile) 
+            pdf_file = PdfParser(imagefile)
+            pdf_file_instance.state=True
+            pdf_file_instance.save(update_fields=['name'])
 
             for page in pdf_file.page_spliter():
                 saved_page = pdf_file.create_pdf(save_folder_path=new_folder, page=page)   
@@ -106,12 +108,29 @@ class PdfCutDjangoViews(View):
 
             return render(request=request,template_name='pdf_cut.html')
         
-        image_part=pdf_file_instance.imageparts.all()
-        exsist_file='Bu file aqlloqachon bazada mavjud va ko\'rib chiqlgan'
+       
+        
+        pdf_file_instance.state=True
+        pdf_file_instance.save(update_fields=['state'])
+        
+        image_file=ImageFile.objects.filter(state=True).all()
+        image_part=ImagePart.objects.filter(imagefile__state=True).all()
+        for i in image_part:
+            print('---',i)
+
 
         context={
+                
+                'image_file':image_file,
                 'image_part':image_part,
-                 'exsist_file':exsist_file,}
+        }
         
         return render(request=request,template_name='pdf_cut.html',context=context)
-    
+ 
+ 
+def get_pdf_cut(request):
+    pdf_id=request.GET.get('pdf_id')
+    imagefile=get_object_or_404(ImageFile,pk=pdf_id)
+    imageparts=imagefile.imageparts.all()
+    context={'imageparts':imageparts}
+    return render(request=request,template_name='get_pdf_cut.html',context=context)
