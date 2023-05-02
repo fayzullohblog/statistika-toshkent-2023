@@ -41,7 +41,12 @@ class ImagePart(models.Model):
               verbose_name='ImagePart'
               verbose_name_plural='ImageParts'
 
-              
+class ZipimagePart(models.Model):
+      zipfile=models.FileField()
+
+      def __str__(self):
+           return self.zipfile.name 
+
 
 
 
