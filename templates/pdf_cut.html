@@ -2,44 +2,55 @@
 {% load static %}
 
 {% block content %}
+
 <style>
-  .thread-reply-file {
-    font-weight: bold;
-    font-size: 14px;
-    color: blue;
-    float: left;
-    cursor: pointer;
-    border: 2px solid black;
-    margin: 5px;
-    padding: 5px;
+  body {
+    background-color: #f2f2f2;
+    font-family: Arial, sans-serif;
+  }
+  
+  h1 {
+    color: #007bff;
     text-align: center;
-    width: 80px;
   }
-  .thread-reply-file span {
-    display: block;
+  
+  ul {
+    list-style-type: none;
+    padding: 0;
+    margin-top: 50px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
   }
-  .thread-reply-file img {
-    width: 50px;
+  
+  li {
+    margin: 10px;
   }
-  div[title=Comments]:after {
-    content: '';
-    display: block;
-    clear: both;
+  
+  a {
+    display: inline-block;
+    padding: 10px;
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+  }
+  
+  a:hover {
+    background-color: #0056b3;
   }
 </style>
 
-{% for pdf in image_file %}
-
-<div title="Comments">
-<div class='thread-reply-file'>
-  <img src='https://cdn4.iconfinder.com/data/icons/CS5/128/ACP_PDF%202_file_document.png'>
-  <a href="/get_pdf_cut/?pdf_id={{ pdf.id }}">views</a>
-  <span>Haneeq Mohamed</span> 
-</div>
+<h1>Zip fayllar</h1>
+<ul>
+  {% for zip in zipimagepart %}
   
-{% endfor %}
+  <li><a href="{{ zip.zipfile.url }}" download>{{ zip.id }}.{{ zip.zipfile }}</a></li>
+
+  {% endfor %}
 
 
+</ul>
 
 
 {% endblock content %}

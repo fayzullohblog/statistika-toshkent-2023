@@ -3,13 +3,57 @@
 
 
 {% block content %}
-
-
-{% for pdf in  imageparts %}
-    <a href="http://127.0.0.1:8000/{{ pdf.oneimage.url }}">open</a> <br>
-{% endfor %}
+<style>
+    body {
+      background-color: #f2f2f2;
+      font-family: Arial, sans-serif;
+    }
     
+    h1 {
+      color: #007bff;
+      text-align: center;
+    }
+    
+    ul {
+      list-style-type: none;
+      padding: 0;
+      margin-top: 50px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    
+    li {
+      margin: 10px;
+    }
+    
+    a {
+      display: inline-block;
+      padding: 10px;
+      background-color: #007bff;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 5px;
+    }
+    
+    a:hover {
+      background-color: #0056b3;
+    }
+  </style>
 
+<h1>Zip fayllar</h1>
+<ul>
+  <li><a href="zip/1.zip" download>1.zip</a></li>
+  <li><a href="zip/2.zip" download>2.zip</a></li>
+  <li><a href="zip/3.zip" download>3.zip</a></li>
+  <li><a href="zip/4.zip" download>4.zip</a></li>
+  <li><a href="zip/5.zip" download>5.zip</a></li>
+  <li><a href="zip/6.zip" download>6.zip</a></li>
+  <li><a href="zip/7.zip" download>7.zip</a></li>
+  <li><a href="zip/8.zip" download>8.zip</a></li>
+  <li><a href="zip/9.zip" download>9.zip</a></li>
+  <li><a href="zip/10.zip" download>10.zip</a></li>
+</ul>
 
 {% endblock content %}
     

@@ -21,13 +21,11 @@ class PdfCutDjangoViews(View):
         imagefile=pdf_file_instance.image_pdf.path
         
         new_folder_name=str(pdf_file_instance.image_pdf).split('/')[1]
+      
         new_folder = MEDIA_ROOT / new_folder_name
         if new_folder.exists() != True:
         #if folder name must be unique
-        
             new_folder.mkdir()
-            
-        
             class PdfParser:
                 """
                     Set pdf file path qrcode image into pdf file
@@ -62,10 +60,12 @@ class PdfCutDjangoViews(View):
                         # create qrcode pdf file
                         watermark_file = self.create_qrcode_pdf(qr_code_image=qr_code_image)
                         watermark = PdfReader(open(watermark_file, "rb"))
+                        # print('--water',watermark.getPage())
                         self.reader.pages[page].merge_page(watermark.pages[0]) # merge qrcode pdf file to pdf file
                         # add qrcode image to pdf file
                         writer.add_page(self.reader.pages[page]) # add page to pdf file
                         writer.write(file) # write pdf file
+                        
                     
                     return SAVED_FILE_PATH_FOR_MODEL
                         
@@ -104,62 +104,88 @@ class PdfCutDjangoViews(View):
 
             for page in pdf_file.page_spliter():
                 saved_page = pdf_file.create_pdf(save_folder_path=new_folder, page=page)
-      
                 ImagePart.objects.create(imagefile=pdf_file_instance, oneimage=saved_page, title=f"{page+1}-page")
-
-
-            return render(request=request,template_name='pdf_cut.html')
+             
+            split_imagefile=str(pdf_file_instance).split('/')[1]
         
+            zip_filename=MEDIA_ROOT/f'{split_imagefile}.zip'
+
+            pdf_files=[f for f in os.listdir(MEDIA_ROOT/split_imagefile) if f.endswith('.pdf')]
+
+            with zipfile.ZipFile(zip_filename,'w',zipfile.ZIP_DEFLATED) as zip:
+                for file_name in pdf_files:
+                    file_path=os.path.join(MEDIA_ROOT/split_imagefile,file_name)
+                    zip.write(file_path,file_name)
+
+            # [ZipimagePart.objects.create(zipfile=zip_file_name) for zip_file_name in [f for f in os.listdir(MEDIA_ROOT) if f.endswith('.zip') ]]    # zipfile=ZipimagePart.objects.get(zipfile=f'{split_imagefile}.zip')
+            ZipimagePart.objects.create(zipfile=f'{new_folder_name}.zip')
+
+
+            target_directory=MEDIA_ROOT
+            shutil.move(zip_filename,os.path.join(target_directory,os.path.join(zip_filename)))
+           
+            zipimagepart=ZipimagePart.objects.all()
+            
+
+            return render(request=request,template_name='pdf_cut.html',context={'zipimagepart':zipimagepart})
     
-        
         pdf_file_instance.state=True
         pdf_file_instance.save(update_fields=['state'])
         
         image_file=ImageFile.objects.filter(state=True).all()
-        # image_part=ImagePart.objects.filter(imagefile__state=True).all()
 
-     
+#   ---------------------------------------------------------------------------
 
+
+        # split_imagefile=str(pdf_file_instance).split('/')[1]
+        
+        # zip_filename=MEDIA_ROOT/f'{split_imagefile}.zip'
+
+        # pdf_files=[f for f in os.listdir(MEDIA_ROOT/split_imagefile) if f.endswith('.pdf')]
+
+        # with zipfile.ZipFile(zip_filename,'w',zipfile.ZIP_DEFLATED) as zip:
+        #     for file_name in pdf_files:
+        #         file_path=os.path.join(MEDIA_ROOT/split_imagefile,file_name)
+        #         zip.write(file_path,file_name)
+
+        # [ZipimagePart.objects.create(zipfile=zip_file_name) for zip_file_name in [f for f in os.listdir(MEDIA_ROOT) if f.endswith('.zip')]]    # zipfile=ZipimagePart.objects.get(zipfile=f'{split_imagefile}.zip')
+
+        # target_directory=MEDIA_ROOT
+        # shutil.move(zip_filename,os.path.join(target_directory,os.path.join(zip_filename)))
+
+        zipimagepart=ZipimagePart.objects.all()
 
         context={
                 
                 'image_file':image_file,
-                # 'image_part':image_part,
+                'zipimagepart':zipimagepart
         }
         
         return render(request=request,template_name='pdf_cut.html',context=context)
  
  
-def get_pdf_cut(request):
-    pdf_id=request.GET.get('pdf_id')
-    imagefile=get_object_or_404(ImageFile,pk=pdf_id)
+# def get_pdf_cut(request):
+#     pdf_id=request.GET.get('pdf_id')
+#     imagefile=get_object_or_404(ImageFile,pk=pdf_id)
 
-    split_imagefile=str(imagefile).split('/')[1]
+#     split_imagefile=str(imagefile).split('/')[1]
     
-    imageparts=imagefile.imageparts.all()
+#     zip_filename=MEDIA_ROOT/f'{split_imagefile}.zip'
+
+#     pdf_files=[f for f in os.listdir(MEDIA_ROOT/split_imagefile) if f.endswith('.pdf')]
+
+#     with zipfile.ZipFile(zip_filename,'w',zipfile.ZIP_DEFLATED) as zip:
+#         for file_name in pdf_files:
+#             file_path=os.path.join(MEDIA_ROOT/split_imagefile,file_name)
+#             zip.write(file_path,file_name)
+#     if 
+
+#     [ZipimagePart.objects.create(zipfile=zip_file_name) for zip_file_name in [f for f in os.listdir(MEDIA_ROOT) if f.endswith('.zip')]]    
+
+#     target_directory=MEDIA_ROOT
+#     shutil.move(zip_filename,os.path.join(target_directory,os.path.join(zip_filename)))
+ 
+#     zipimagepart=ZipimagePart.objects.all()
     
-    zip_filename=MEDIA_ROOT/f'{split_imagefile}.zip'
-
-    pdf_files=[f for f in os.listdir(MEDIA_ROOT/split_imagefile) if f.endswith('.pdf')]
-
-    with zipfile.ZipFile(zip_filename,'w',zipfile.ZIP_DEFLATED) as zip:
-        for file_name in pdf_files:
-            file_path=os.path.join(MEDIA_ROOT/split_imagefile,file_name)
-            zip.write(file_path,file_name)
-
-
-    # if any 
-
-    [ZipimagePart.objects.create(zipfile=zip_file_name) for zip_file_name in [f for f in os.listdir(MEDIA_ROOT) if f.endswith('.zip')]]
-    # zipfile=ZipimagePart.objects.get(zipfile=f'{split_imagefile}.zip')
-
-
-    target_directory=MEDIA_ROOT
-    shutil.move(zip_filename,os.path.join(target_directory,os.path.join(zip_filename)))
-
-    
-
-
-
-    context={'imageparts':imageparts}
-    return render(request=request,template_name='get_pdf_cut.html',context=context)
+#     context={'zipimagepart':zipimagepart}
+#     return render(request=request,template_name='get_pdf_cut.html',context=context)

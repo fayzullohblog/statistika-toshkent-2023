@@ -28,14 +28,14 @@ class ImageFile(BaseModel):
 
 class ImagePart(models.Model):
        imagefile=models.ForeignKey(ImageFile,related_name='imageparts', on_delete=models.SET_NULL,null=True)
-       oneimage=models.FileField(upload_to='oneimage',null=True,blank=True)
+       oneimage=models.FileField(upload_to='oneimage')
        title=models.CharField(max_length=250,null=True,blank=True)
        created_date=models.DateTimeField(auto_now_add=True)
        updated_date=models.DateTimeField(auto_now=True)
 
     
        def __str__(self):
-              return f"{self.imagefile.name} {self.title}"
+              return f'{self.title}'
 
        class Meta:
               verbose_name='ImagePart'
