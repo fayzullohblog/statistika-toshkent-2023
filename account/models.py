@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-from common.choose import UserChoices
+from common.choose import UserChoices,DegreeOwner
 from .manager import AccountManager 
 
 # Create your models here.
@@ -12,7 +12,7 @@ class Account(AbstractUser):
     password=models.CharField(max_length=100)
     email=models.EmailField(unique=True)
     first_name=models.CharField(max_length=50,null=True,blank=True)
-    last_name=models.CharField(max_length=50,null=True,blank=True)
+    degree=models.CharField(max_length=50)
     
     EMAIL_FIELD = "password"
     USERNAME_FIELD='username'

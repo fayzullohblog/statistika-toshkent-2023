@@ -82,7 +82,7 @@ class PdfCutDjangoViews(View):
                     qr_code_image.save(MEDIA_ROOT / "data.png")
                     return MEDIA_ROOT / "data.png"
 
-
+                    
                 def create_qrcode_pdf(self,  qr_code_image, watermark_file:str='watermark.pdf'):
                     """
                         Create pdf file with qrcode image
@@ -106,6 +106,8 @@ class PdfCutDjangoViews(View):
                 saved_page = pdf_file.create_pdf(save_folder_path=new_folder, page=page)
                 ImagePart.objects.create(imagefile=pdf_file_instance, oneimage=saved_page, title=f"{page+1}-page")
              
+
+
             split_imagefile=str(pdf_file_instance).split('/')[1]
         
             zip_filename=MEDIA_ROOT/f'{split_imagefile}.zip'
@@ -134,24 +136,7 @@ class PdfCutDjangoViews(View):
         
         image_file=ImageFile.objects.filter(state=True).all()
 
-#   ---------------------------------------------------------------------------
 
-
-        # split_imagefile=str(pdf_file_instance).split('/')[1]
-        
-        # zip_filename=MEDIA_ROOT/f'{split_imagefile}.zip'
-
-        # pdf_files=[f for f in os.listdir(MEDIA_ROOT/split_imagefile) if f.endswith('.pdf')]
-
-        # with zipfile.ZipFile(zip_filename,'w',zipfile.ZIP_DEFLATED) as zip:
-        #     for file_name in pdf_files:
-        #         file_path=os.path.join(MEDIA_ROOT/split_imagefile,file_name)
-        #         zip.write(file_path,file_name)
-
-        # [ZipimagePart.objects.create(zipfile=zip_file_name) for zip_file_name in [f for f in os.listdir(MEDIA_ROOT) if f.endswith('.zip')]]    # zipfile=ZipimagePart.objects.get(zipfile=f'{split_imagefile}.zip')
-
-        # target_directory=MEDIA_ROOT
-        # shutil.move(zip_filename,os.path.join(target_directory,os.path.join(zip_filename)))
 
         zipimagepart=ZipimagePart.objects.all()
 
