@@ -42,10 +42,16 @@ class ImagePart(models.Model):
               verbose_name_plural='ImageParts'
 
 class ZipimagePart(models.Model):
-      zipfile=models.FileField()
+       zipfile=models.FileField()
+       state=models.BooleanField(default=False)
+       created_date=models.DateTimeField(auto_now_add=True)
+       updated_date=models.DateTimeField(auto_now=True)
 
-      def __str__(self):
-           return self.zipfile.name 
+       def __str__(self):
+              return self.zipfile.name
+       
+       
+              
 
 
 

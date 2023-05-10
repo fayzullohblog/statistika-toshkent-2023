@@ -1,0 +1,131 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+    <style>
+        
+        .download-btn {
+            display: block;
+            margin-top: 10px;
+            padding: 6px 12px;
+            background-color: #008CBA;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+          }
+          
+          .download-btn:hover {
+            background-color: #005f77;
+          }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+          }
+          
+          th, td {
+            text-align: left;
+            padding: 8px;
+          }
+          
+          th {
+            background-color: #f2f2f2;
+            color: #333;
+            font-weight: bold;
+            text-transform: uppercase;
+          }
+          
+          td {
+            background-color: #fff;
+            color: #333;
+          }
+          
+          tbody tr:nth-child(even) td {
+            background-color: #f2f2f2;
+          }
+          
+          tbody tr:hover {
+            background-color: #ddd;
+          }
+          
+          @media screen and (max-width: 600px) {
+            table, thead, tbody, th, td, tr { 
+              display: block; 
+            }
+          
+            thead tr { 
+              position: absolute;
+              top: -9999px;
+              left: -9999px;
+            }
+          
+            tr { border: 1px solid #ccc; }
+          
+            td { 
+              border: none;
+              border-bottom: 1px solid #eee; 
+              position: relative;
+              padding-left: 50%; 
+            }
+          
+            td:before { 
+              position: absolute;
+              top: 6px;
+              left: 6px;
+              width: 45%; 
+              padding-right: 10px; 
+              white-space: nowrap;
+            }
+          
+            td:nth-of-type(1):before { content: "Zip:"; }
+            td:nth-of-type(2):before { content: "City:"; }
+            td:nth-of-type(3):before { content: "State:"; }
+            
+            .download-btn {
+              display: block;
+              margin-top: 10px;
+              padding: 6px 12px;
+              background-color: #008CBA;
+              color: #fff;
+              border: none;
+              border-radius: 4px;
+              cursor: pointer;
+            }
+          }
+          
+          
+    </style>
+    <table>
+        <thead>
+          <tr>
+            <th>Zip</th>
+            <th>City</th>
+            <th>State</th>
+            <th> yuklash </th>
+          </tr>
+        </thead>
+       <tbody>
+          <form method="POST"> 
+
+               {% for zip in zips %}
+                        <tr>
+                        <td>{{ zip.zipfile }}</td>
+                        <td></td>
+                        <td>NY</td>
+                        <td>
+                        <button class="download-btn"  type="button" >
+                            <a  href="{{ zip.zipfile.url }}" style="color:cornsilk" download>Download</a>
+                        </button>
+                        </td>
+                        </tr>
+                        <input type="hidden" value={{ zip.id }} name="zip_id">
+            {% endfor %}
+          </form>
+        </tbody>
+      </table>
+      
+      
+{% endblock content %}
+    

@@ -1,30 +1,15 @@
 import PyPDF2
 import re
+
 # Open the PDF file
 pdf_file = open('test/file.pdf', 'rb')
 
 # Create a PDF reader object
-pdf_reader = PyPDF2.PdfReader(pdf_file)
+pdf_writer=PyPDF2.PdfWriter()
+text='assalomu'
 
-# Get the number of pages in the PDF file
-num_pages = len(pdf_reader.pages)
-pdf_page=pdf_reader.pages[0].extract_text()
-# print(re.findall('\d+',pdf_page)[22])
-for i in pdf_page.split('STIR'):
-    print(i)
+page=pdf_writer.add_blank_page(width=75,height=75)
+page.mergePage(pdf_writer.add_)
+pdf_writer.write(pdf_file)
+pdf_file.close()
 
-
-
-# # # Loop through all the pages and extract text
-# for i in range(num_pages):
-#     # Get the current page object
-#     page = pdf_reader.pages[num_pages-1]
-
-#     # Extract the text from the current page
-#     text = page.extract_text()
-
-#     # Print the text
-#     print(text[550:600])
-
-# # Close the PDF file
-# pdf_file.close()

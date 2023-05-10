@@ -3,6 +3,7 @@ from django.shortcuts import render,redirect
 from .form.forms import AccountForm,LoginForm
 from .manager import AccountManager
 from django.contrib import messages
+from common.choose import UserChoices
 
 
 # Create your views here.login() takes 1 positional argument but 2 were given
@@ -39,7 +40,10 @@ def login_view(request):
             print(username,password,user)
             if user is not None:
                 login(request,user)
-                return redirect('index')
+                if request.user.user == UserChoices.OWNER:
+                    return redirect('index')
+                return redirect('staff_zip')
+                
             else:
                 messages.error(request,'Invalid username or password')
         
