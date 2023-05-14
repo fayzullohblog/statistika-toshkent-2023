@@ -1,4 +1,4 @@
-from django.contrib.auth import login,authenticate
+from django.contrib.auth import login,authenticate,logout
 from django.shortcuts import render,redirect
 from .form.forms import AccountForm,LoginForm
 from .manager import AccountManager
@@ -49,3 +49,7 @@ def login_view(request):
         
     context={'form':form}
     return render(request=request,template_name='register/login.html',context=context)
+
+def logout_view(request):
+    logout(request)
+    return redirect('login')

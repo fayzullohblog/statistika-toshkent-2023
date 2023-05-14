@@ -117,7 +117,6 @@ class PdfCutDjangoViews(View):
                     file_path=os.path.join(MEDIA_ROOT/split_imagefile,file_name)
                     zip.write(file_path,file_name)
 
-            # [ZipimagePart.objects.create(zipfile=zip_file_name) for zip_file_name in [f for f in os.listdir(MEDIA_ROOT) if f.endswith('.zip') ]]    # zipfile=ZipimagePart.objects.get(zipfile=f'{split_imagefile}.zip')
             ZipimagePart.objects.create(zipfile=f'{new_folder_name}.zip')
 
 
@@ -135,14 +134,15 @@ class PdfCutDjangoViews(View):
         image_file=ImageFile.objects.filter(state=True).all()
 
 
-
-        zipimagepart=ZipimagePart.objects.all()
+        imagepart=pdf_file_instance.imageparts.all()
     
+        
+
 
         context={
                 
                 'image_file':image_file,
-                'zipimagepart':zipimagepart
+                'imagepart':imagepart
         }
         
         return render(request=request,template_name='pdf_cut.html',context=context)

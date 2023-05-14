@@ -101,26 +101,24 @@
         <thead>
           <tr>
             <th>Zip</th>
-            <th>City</th>
-            <th>State</th>
+            <th>Sana</th>
             <th> yuklash </th>
           </tr>
         </thead>
        <tbody>
           <form method="POST"> 
-
-               {% for zip in zips %}
+             {% csrf_token %}
+            {% for zip in zips %}
+            <input type="hidden" value="{{ zip.id }}" name="zip_id">
                         <tr>
                         <td>{{ zip.zipfile }}</td>
-                        <td></td>
-                        <td>NY</td>
+                         <td> {{ zip.created_date }}</td>
                         <td>
-                        <button class="download-btn"  type="button" >
+                        <button class="download-btn"  type="submit" >
                             <a  href="{{ zip.zipfile.url }}" style="color:cornsilk" download>Download</a>
                         </button>
                         </td>
                         </tr>
-                        <input type="hidden" value={{ zip.id }} name="zip_id">
             {% endfor %}
           </form>
         </tbody>

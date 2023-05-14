@@ -5,17 +5,27 @@
     <div class="container">
         <div class="wrapper header-bg">
             <h3 class="logo">
-                <img src="https://www.toshstat.uz/images/toshstatlogo.png" alt="">
+            
+            
+            {% if user.is_superuser %}
+            <a href="{% url 'index' %}"> <img src="https://www.toshstat.uz/images/toshstatlogo.png" alt=""></a>
+            {% else %}
+            <img src="https://www.toshstat.uz/images/toshstatlogo.png" alt="">
+                
+            {% endif %}
+                
+                
+          
+                
             </h3>
             <nav id="nav">
                 <ul>
                     <li><a href="{% url 'index' %}" class="active">Home</a></li>
-                    <li><a href="pages/about.php">About</a></li>
-                    <li><a href="pages/service.php">Service</a></li>
-                    <li><a href="pages/project.php">Project</a></li>
-                    <li><a href="#"><span class="lnr lnr-cart"></span></a></li>
+                    <li><a href="#">Service</a></li>
                     <li><a href="{% url 'login' %}">login</a></li>
                     <li><a href="{% url 'register' %}">register</a></li>
+                    <li><a href="{% url 'logout' %}">LogOut</a></li>
+                    <li><a href="#"><span class="lnr lnr-cart"></span></a></li>
                 </ul>
             </nav>
         </div>
