@@ -1,1 +1,2 @@
 # staff_zip.html filga, zip fillar bilan ihslayotgan edim
+# context_processors qilinnayogan edi: headern savatchasi uchun

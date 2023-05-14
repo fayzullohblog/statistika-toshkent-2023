@@ -20,12 +20,15 @@
             </h3>
             <nav id="nav">
                 <ul>
+                    
+                    {% if request.user.is_superuser %}
                     <li><a href="{% url 'index' %}" class="active">Home</a></li>
-                    <li><a href="#">Service</a></li>
-                    <li><a href="{% url 'login' %}">login</a></li>
+                    {% endif %}
+                    <li style="color:rgb(20, 125, 10)"><b style="font-size: large;" >{{ request.user }}</b></li>
+                    <li><a href="{% url 'login' %}"> login</a></li>
                     <li><a href="{% url 'register' %}">register</a></li>
                     <li><a href="{% url 'logout' %}">LogOut</a></li>
-                    <li><a href="#"><span class="lnr lnr-cart"></span></a></li>
+                    <li><a href="#"><span class="lnr lnr-cart"></span>{{ count_pdf }}</a></li>
                 </ul>
             </nav>
         </div>
