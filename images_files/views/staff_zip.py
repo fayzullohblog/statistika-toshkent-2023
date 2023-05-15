@@ -4,11 +4,9 @@ from ..models import ZipimagePart
 from django.shortcuts import render
 
 def staff_zip(request):
-    if request.user.is_authenticated:
-        if  request.user.user == UserChoices.STAFF:
-            zips=ZipimagePart.objects.all()
-            return render(request=request,template_name='staff_zip.html',context={'zips':zips})
-        else:
-            return redirect('index')
-    else:
+    if not request.user.is_authenticated:
         return redirect('login')
+    if request.user.user != UserChoices.STAFF:
+        return redirect('index')
+    zips=ZipimagePart.objects.all()
+    return render(request=request,template_name='staff_zip.html',context={'zips':zips})
