@@ -67,19 +67,19 @@ class PdfCutDjangoViews(View):
 
         return render(request=request,template_name='pdf_cut.html',context={'zipimagepart':zipimagepart})
 
-        # pdf_file_instance.state=True
-        # pdf_file_instance.save(update_fields=['state'])
+        pdf_file_instance.state=True
+        pdf_file_instance.save(update_fields=['state'])
 
-        # image_file=ImageFile.objects.filter(state=True).all()
+        image_file=ImageFile.objects.filter(state=True).all()
 
 
-        # imagepart=pdf_file_instance.imageparts.all()
+        imagepart=pdf_file_instance.imageparts.all()
 
-        # context={
+        context={
 
-        #         'image_file':image_file,
-        #         'imagepart':imagepart
-        # }
+                'image_file':image_file,
+                'imagepart':imagepart
+        }
 
-        # return render(request=request,template_name='pdf_cut.html',context=context)
+        return render(request=request,template_name='pdf_cut.html',context=context)
         
