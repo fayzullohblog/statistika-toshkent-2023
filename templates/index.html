@@ -3,6 +3,11 @@
 
 
 {% block content %}
+<!-- only style for paginator  -->
+
+
+
+
 <section class="ftco-section">
     <div class="container">
        {{ pdf_none }}
@@ -11,6 +16,7 @@
               
                 <div class="table-wrap">
                   <table class="table">
+                   
 
 
                     <thead class="thead-primary">
@@ -29,8 +35,9 @@
 <form action="{% url 'pdf_cut' %}" method="POST">
   {% csrf_token %}
     <tbody>
-      {% for pdf in pdfs %}
+      {% for pdf in page_obj %}
       <tr>
+     
         
         <th scope="row" class="scope" ><ol><li></li></ol></th>
         <td>{{ pdf.created_date }}</td>
@@ -42,16 +49,41 @@
         <td><a class="btn btn-primary" href="http://127.0.0.1:8000/pdf_cut/?pdf_id={{pdf.id}}">Share</a></td>
         <!-- {% comment %} <td><button  class="btn btn-primary" type="button"> Share</button>  </td> {% endcomment %} -->
 
+ 
       </tr>                    
       {% endfor %}
     </tbody>
 </form>
 
+
+
                   </table>
                 </div>
             </div>
+            
+            <div class="pagination">
+              <span class="step-links">
+                  {% if page_obj.has_previous %}
+                      <a href="?page=1" style="color:rgb(189, 49, 14)">&laquo; Birinchi</a> ||
+                      <a  href="?page={{ page_obj.previous_page_number }}" >Oldingi:</a>
+                  {% endif %}
+          
+                  <span class="current">
+                    {{ page_obj.number }}-bet
+                </span>
+        
+                  {% if page_obj.has_next %}
+                      <a href="?page={{ page_obj.next_page_number }}">:Keyingi</a> || 
+                      <a href="?page={{ page_obj.paginator.num_pages }}" style="color:rgb(177, 32, 10)">Oxirgi &raquo;</a>
+                  {% endif %}
+              </span>
+            </div>
+
+
         </div>
+       <b>Jami saxifa:</b> <b>{{ page_obj.paginator.num_pages }}</b>
     </div>
 </section>
+
 {% endblock content %}
     

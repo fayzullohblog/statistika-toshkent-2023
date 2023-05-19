@@ -3,6 +3,7 @@
 
 
 {% block content %}
+
     <style>
         
         .download-btn {
@@ -108,14 +109,15 @@
        <tbody>
           <form method="POST"> 
              {% csrf_token %}
-            {% for zip in zips %}
+            {% for zip in page_obj %}
             <input type="hidden" value="{{ zip.id }}" name="zip_id">
                         <tr>
                         <td>{{ zip.zipfile }}</td>
                          <td> {{ zip.created_date }}</td>
+                         <input type="hidden" name="zip_id" value={{ zip.id }} id="">
                         <td>
                         <button class="download-btn"  type="submit" >
-                            <a  href="{{ zip.zipfile.url }}" style="color:cornsilk" download>Download</a>
+                            <a  href="{{ zip.zipfile.url }}" type="submit" style="color:cornsilk" download>Download</a>
                         </button>
                         </td>
                         </tr>
@@ -123,6 +125,28 @@
           </form>
         </tbody>
       </table>
+             
+      
+      <div class="pagination">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+                <a href="?page=1" style="color:rgb(189, 49, 14)">&laquo; Birinchi</a> ||
+                <a  href="?page={{ page_obj.previous_page_number }}" >Oldingi:</a>
+            {% endif %}
+    
+            <span class="current">
+              {{ page_obj.number }}-bet
+          </span>
+  
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}">:Keyingi</a> || 
+                <a href="?page={{ page_obj.paginator.num_pages }}" style="color:rgb(177, 32, 10)">Oxirgi &raquo;</a>
+            {% endif %}
+        </span>
+      </div>
+
+      <b>Jami saxifa:</b> <b>{{ page_obj.paginator.num_pages }}</b>
+
       
       
 {% endblock content %}

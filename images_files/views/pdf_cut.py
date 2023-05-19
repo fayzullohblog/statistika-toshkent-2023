@@ -4,12 +4,11 @@ import os,zipfile,shutil
 from django.shortcuts import get_object_or_404, render
 from django.views import View
 import random
-
 from config.settings import MEDIA_ROOT
-
 from ..models import ImageFile, ImagePart,ZipimagePart
-
 from common.pdf_parser import PdfParser
+
+
 
 class PdfCutDjangoViews(View):
 
@@ -42,7 +41,7 @@ class PdfCutDjangoViews(View):
         for page in pdf_file.page_spliter():
             saved_page = pdf_file.create_pdf(save_folder_path=new_folder, page=page, 
                                             data_1=str(request.user.first_name), x_path_1=410, y_path_1=150,
-                                            data_2=str(request.user.degree), x_path_2=100, y_path_2=150)
+                                            data_2=str(request.user.degree), x_path_2=60, y_path_2=150)
             ImagePart.objects.create(imagefile=pdf_file_instance, oneimage=saved_page, title=f"{page+1}-page")
 
         #create zip file
@@ -65,8 +64,42 @@ class PdfCutDjangoViews(View):
 
         zipimagepart=ZipimagePart.objects.all()
 
-        return render(request=request,template_name='pdf_cut.html',context={'zipimagepart':zipimagepart})
+        pdf_file_instance.state=True
+        pdf_file_instance.save(update_fields=['state'])
+
+        image_file=ImageFile.objects.filter(state=True).all()
+
+
+        imagepart=pdf_file_instance.imageparts.all()
+
+        context={
+
+                'image_file':image_file,
+                'imagepart':imagepart,
+                'zipimagepart':zipimagepart,
+        }
+
+        return render(request=request,template_name='pdf_cut.html',context=context)
 
 
         
         
+
+        # pdf_file_instance.state=True
+        # pdf_file_instance.save(update_fields=['state'])
+
+        # image_file=ImageFile.objects.filter(state=True).all()
+
+
+        # imagepart=pdf_file_instance.imageparts.all()
+
+        # context={
+
+        #         'image_file':image_file,
+        #         'imagepart':imagepart
+        # }
+
+        # return render(request=request,template_name='pdf_cut.html',context=context)  
+    
+
+    
