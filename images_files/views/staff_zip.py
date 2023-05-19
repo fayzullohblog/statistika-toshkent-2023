@@ -8,5 +8,5 @@ def staff_zip(request):
         return redirect('login')
     if request.user.user != UserChoices.STAFF:
         return redirect('index')
-    zips=ZipimagePart.objects.all()
+    zips=ZipimagePart.objects.all().order_by('-created_date')
     return render(request=request,template_name='staff_zip.html',context={'zips':zips})
