@@ -3,7 +3,6 @@ from common.choose import UserChoices
 import os,zipfile,shutil
 from django.shortcuts import get_object_or_404, render
 from django.views import View
-import random
 from config.settings import MEDIA_ROOT
 from ..models import ImageFile, ImagePart,ZipimagePart
 from common.pdf_parser import PdfParser
@@ -21,6 +20,7 @@ class PdfCutDjangoViews(View):
         #TODO must check user is authenticated and user is admin or DIREKTOR becuase this page only for admin and direktor for security
         domain_name=request.META['HTTP_HOST']
         pdf_id=request.GET.get('pdf_id')
+        
         print(request.user.degree)
 
         pdf_file_instance = get_object_or_404(ImageFile, pk=pdf_id)
@@ -29,77 +29,60 @@ class PdfCutDjangoViews(View):
         new_folder_name=str(pdf_file_instance.image_pdf).split('/')[1]
 
         new_folder = MEDIA_ROOT / new_folder_name
+       
+        if new_folder.exists() != True:
+            #if folder name must be unique
+            new_folder.mkdir()
 
-        if os.path.exists(new_folder):
-            shutil.rmtree(new_folder)
-        os.makedirs(new_folder)
+            pdf_file = PdfParser(imagefile, domain_name)
+            pdf_file_instance.state=True
+            pdf_file_instance.save(update_fields=['name'])
 
-        pdf_file = PdfParser(imagefile, domain_name)
-        pdf_file_instance.state=True
-        pdf_file_instance.save(update_fields=['name'])
+            for page in pdf_file.page_spliter():
+                saved_page = pdf_file.create_pdf(save_folder_path=new_folder, page=page, 
+                                                data_1=str(request.user.first_name), x_path_1=410, y_path_1=150,
+                                                data_2=str(request.user.degree), x_path_2=60, y_path_2=150)
+                ImagePart.objects.create(imagefile=pdf_file_instance, oneimage=saved_page, title=f"{page+1}-page")
 
-        for page in pdf_file.page_spliter():
-            saved_page = pdf_file.create_pdf(save_folder_path=new_folder, page=page, 
-                                            data_1=str(request.user.first_name), x_path_1=410, y_path_1=150,
-                                            data_2=str(request.user.degree), x_path_2=60, y_path_2=150)
-            ImagePart.objects.create(imagefile=pdf_file_instance, oneimage=saved_page, title=f"{page+1}-page")
+            #create zip file
+            # split_imagefile=str(pdf_file_instance).split('/')[1]
 
-        #create zip file
-        split_imagefile=str(pdf_file_instance).split('/')[1]
+            # zip_filename=MEDIA_ROOT/f'{split_imagefile}.zip'
 
-        zip_filename=MEDIA_ROOT/f'{split_imagefile}.zip'
+            # pdf_files=[f for f in os.listdir(MEDIA_ROOT/split_imagefile) if f.endswith('.pdf')]
 
-        pdf_files=[f for f in os.listdir(MEDIA_ROOT/split_imagefile) if f.endswith('.pdf')]
+            # with zipfile.ZipFile(zip_filename,'w',zipfile.ZIP_DEFLATED) as zip:
+            #     for file_name in pdf_files:
+            #         file_path=os.path.join(MEDIA_ROOT/split_imagefile,file_name)
+            #         zip.write(file_path,file_name)
 
-        with zipfile.ZipFile(zip_filename,'w',zipfile.ZIP_DEFLATED) as zip:
-            for file_name in pdf_files:
-                file_path=os.path.join(MEDIA_ROOT/split_imagefile,file_name)
-                zip.write(file_path,file_name)
+            # #save zip file to database
+            # ZipimagePart.objects.create(zipfile=f'{new_folder_name}.zip')
 
-        #save zip file to database
-        ZipimagePart.objects.create(zipfile=f'{new_folder_name}.zip')
+            # target_directory=MEDIA_ROOT
+            # shutil.move(zip_filename,os.path.join(target_directory,os.path.join(zip_filename)))
 
-        target_directory=MEDIA_ROOT
-        shutil.move(zip_filename,os.path.join(target_directory,os.path.join(zip_filename)))
+            # zipimagepart=ZipimagePart.objects.all()
 
-        zipimagepart=ZipimagePart.objects.all()
+            # pdf_file_instance.state=True
+            # pdf_file_instance.save(update_fields=['state'])
 
-        pdf_file_instance.state=True
-        pdf_file_instance.save(update_fields=['state'])
+            return render(request=request,template_name='pdf_cut.html')
 
         image_file=ImageFile.objects.filter(state=True).all()
 
-
         imagepart=pdf_file_instance.imageparts.all()
+         
+       
 
         context={
 
                 'image_file':image_file,
                 'imagepart':imagepart,
-                'zipimagepart':zipimagepart,
+                'pdf_id':pdf_id
         }
 
         return render(request=request,template_name='pdf_cut.html',context=context)
 
 
-        
-        
 
-        # pdf_file_instance.state=True
-        # pdf_file_instance.save(update_fields=['state'])
-
-        # image_file=ImageFile.objects.filter(state=True).all()
-
-
-        # imagepart=pdf_file_instance.imageparts.all()
-
-        # context={
-
-        #         'image_file':image_file,
-        #         'imagepart':imagepart
-        # }
-
-        # return render(request=request,template_name='pdf_cut.html',context=context)  
-    
-
-    

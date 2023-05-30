@@ -18,14 +18,14 @@ body {
 }
 
 header {
-    background: rgba(115,112,216,0.9);
+    background: rgba(75, 75, 107, 0.9);
 }
 .wrapper {
     display: flex;
     align-items: center;
     justify-content: space-between;
 
-    padding: 25px;
+    padding: 10px;
 }
 nav ul{
     list-style-type: none;

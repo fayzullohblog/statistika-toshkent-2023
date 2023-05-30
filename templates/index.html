@@ -19,17 +19,17 @@
                    
 
 
-                    <thead class="thead-primary">
-                      <tr>
-                        
-                        <th>Id</th>
-                        <th>Date</th>
-                        <th>Name</th>
-                        <th>State</th>
-                        <th>File</th>
-                        <th>Send</th>
-                      </tr>
-                    </thead>
+    <thead class="thead-primary">
+      <tr>
+        
+        <th>Id</th>
+        <th>Date</th>
+        <th>Name</th>
+        <th>State</th>
+        <th>File</th>
+        <th>Send</th>
+      </tr>
+    </thead>
                 
                     
 <form action="{% url 'pdf_cut' %}" method="POST">
@@ -37,9 +37,8 @@
     <tbody>
       {% for pdf in page_obj %}
       <tr>
-     
-        
-        <th scope="row" class="scope" ><ol><li></li></ol></th>
+        <td>{{ pdf.id }}</td>
+       
         <td>{{ pdf.created_date }}</td>
         <input type="hidden" value={{ pdf.id }} name="pdf_id">
         <input type="hidden" value={{ pdf.image_pdf }} name="imagefile">
@@ -60,28 +59,31 @@
                   </table>
                 </div>
             </div>
-            
-            <div class="pagination">
+            <div class="container" style="display: flex; justify-content: center; margin-top: 50px;">
+              <div class="pagination">
               <span class="step-links">
                   {% if page_obj.has_previous %}
-                      <a href="?page=1" style="color:rgb(189, 49, 14)">&laquo; Birinchi</a> ||
-                      <a  href="?page={{ page_obj.previous_page_number }}" >Oldingi:</a>
-                  {% endif %}
-          
-                  <span class="current">
-                    {{ page_obj.number }}-bet
-                </span>
-        
-                  {% if page_obj.has_next %}
-                      <a href="?page={{ page_obj.next_page_number }}">:Keyingi</a> || 
-                      <a href="?page={{ page_obj.paginator.num_pages }}" style="color:rgb(177, 32, 10)">Oxirgi &raquo;</a>
-                  {% endif %}
-              </span>
+                      <a href="?page=1" style="color:rgb(189, 49, 14); background-color: lightblue; padding: 10px;">&laquo; Birinchi</a>
+  
+                      <a  href="?page={{ page_obj.previous_page_number }}" style="padding:10px;background-color: darkblue; color: #fff;" >Oldingi&raquo;</a>
+                      {% endif %}
+              
+                      <span class="current">
+                        {{ page_obj.number }}-bet
+                    </span>
+            
+                      {% if page_obj.has_next %}
+                          <a href="?page={{ page_obj.next_page_number }}" style="color:rgb(177, 32, 10); background-color: lightblue; padding: 10px;">&laquo;Keyingi</a>  
+                          <a href="?page={{ page_obj.paginator.num_pages }}" style="padding:10px;background-color:darkblue; color: #fff;">Oxirgi &raquo;</a>
+                      {% endif %}
+                  </span> <hr>
+                 
+                </div>
             </div>
-
-
-        </div>
-       <b>Jami saxifa:</b> <b>{{ page_obj.paginator.num_pages }}</b>
+            
+        <hr> <br>  <p>
+                      <b>Jami saxifa:</b> <b>{{ page_obj.paginator.num_pages }}</b>
+                  </p>
     </div>
 </section>
 

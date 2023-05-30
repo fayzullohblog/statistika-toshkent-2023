@@ -6,7 +6,7 @@
       /* Bu CSS qismi fillarlar uchun izohli stili belgilaydi */
       .fillar {
         width: 100px;
-        height: 60px;
+        height: 100px;
         background-color: #f5f5f5;
         border: 1px solid #ccc;
         margin: 10px;
@@ -31,14 +31,26 @@
 
   
   <body>
-   
+
+<form action="page_delete/" method="GET" > 
+      
     {% for pdf in imagepart %}
         <div class="fillar">
           
-          <a href="http://127.0.0.1:8000/{{ pdf.oneimage.url }}">view</a>
-<br><b>{{ pdf.title }}</b>          
+          <a href="http://127.0.0.1:8000/{{ pdf.oneimage.url }}">Open</a> <br>
+          <a href="http://127.0.0.1:8000/page_delete/?pdf_id={{pdf_id}}&page_id={{ pdf.id }} ">Delete</a>
+            <br><b>{{ pdf.title }}</b>          
         </div>
-  {% endfor %}
+     {% endfor %}
+
+     
+</form>
+
+ <form action="create_zip/" method="POST">
+  {% csrf_token %}
+  <input type="hidden" name="pdf_id" value="{{ pdf_id }}">
+  <button type="submit" >Junatish</button>
+ </form>
    
 
     <!-- Boshqa fillarlar shu usul bilan qo'shilishi mumkin -->

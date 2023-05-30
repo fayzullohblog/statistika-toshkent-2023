@@ -3,9 +3,11 @@
 
 
 {% block content %}
+<!-- <div style="width:100%; background-color:#f2f2f2;margin-top:100px;"> -->
+<div class="container"style="margin-top:100px;">
 
     <style>
-        
+        .container {width:1300px;margin:0 auto;}
         .download-btn {
             display: block;
             margin-top: 10px;
@@ -20,19 +22,22 @@
           .download-btn:hover {
             background-color: #005f77;
           }
-
-        table {
+          table {
             border-collapse: collapse;
             width: 100%;
+            background-color: #f2f2f2;
+          }
+
+          thead tr {
+            background-color: #008CBA;
           }
           
           th, td {
             text-align: left;
-            padding: 8px;
+            padding: 10px 20px;
           }
           
           th {
-            background-color: #f2f2f2;
             color: #333;
             font-weight: bold;
             text-transform: uppercase;
@@ -99,7 +104,7 @@
           
     </style>
     <table>
-        <thead>
+        <thead >
           <tr>
             <th>Zip</th>
             <th>Sana</th>
@@ -125,29 +130,36 @@
           </form>
         </tbody>
       </table>
-             
-      
-      <div class="pagination">
-        <span class="step-links">
-            {% if page_obj.has_previous %}
-                <a href="?page=1" style="color:rgb(189, 49, 14)">&laquo; Birinchi</a> ||
-                <a  href="?page={{ page_obj.previous_page_number }}" >Oldingi:</a>
-            {% endif %}
-    
-            <span class="current">
-              {{ page_obj.number }}-bet
-          </span>
   
-            {% if page_obj.has_next %}
-                <a href="?page={{ page_obj.next_page_number }}">:Keyingi</a> || 
-                <a href="?page={{ page_obj.paginator.num_pages }}" style="color:rgb(177, 32, 10)">Oxirgi &raquo;</a>
-            {% endif %}
-        </span>
-      </div>
+</div> 
+<!-- </div>            -->
+      <div class="container" style="display: flex; justify-content: center; margin-top: 50px;">
+            <div class="pagination">
+            <span class="step-links">
+                {% if page_obj.has_previous %}
+                    <a href="?page=1" style="color:rgb(189, 49, 14); background-color: lightblue; padding: 10px;">&laquo; Birinchi</a>
 
-      <b>Jami saxifa:</b> <b>{{ page_obj.paginator.num_pages }}</b>
-
-      
-      
-{% endblock content %}
+                    <a  href="?page={{ page_obj.previous_page_number }}" style="padding:10px;background-color: darkblue; color: #fff;" >Oldingi&raquo;</a>
+                    {% endif %}
+            
+                    <span class="current">
+                      {{ page_obj.number }}-bet
+                  </span>
+          
+                    {% if page_obj.has_next %}
+                        <a href="?page={{ page_obj.next_page_number }}" style="color:rgb(177, 32, 10); background-color: lightblue; padding: 10px;">&laquo;Keyingi</a>  
+                        <a href="?page={{ page_obj.paginator.num_pages }}" style="padding:10px;background-color:darkblue; color: #fff;">Oxirgi &raquo;</a>
+                    {% endif %}
+                </span> <hr>
+               
+              </div>
+          </div>
+          
+      <hr> <br>  <p>
+                    <b>Jami saxifa:</b> <b>{{ page_obj.paginator.num_pages }}</b>
+                </p>
+          
     
+    
+          
+    {% endblock content %}
