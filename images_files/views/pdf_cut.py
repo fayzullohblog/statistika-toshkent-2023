@@ -44,29 +44,6 @@ class PdfCutDjangoViews(View):
                                                 data_2=str(request.user.degree), x_path_2=60, y_path_2=150)
                 ImagePart.objects.create(imagefile=pdf_file_instance, oneimage=saved_page, title=f"{page+1}-page")
 
-            #create zip file
-            # split_imagefile=str(pdf_file_instance).split('/')[1]
-
-            # zip_filename=MEDIA_ROOT/f'{split_imagefile}.zip'
-
-            # pdf_files=[f for f in os.listdir(MEDIA_ROOT/split_imagefile) if f.endswith('.pdf')]
-
-            # with zipfile.ZipFile(zip_filename,'w',zipfile.ZIP_DEFLATED) as zip:
-            #     for file_name in pdf_files:
-            #         file_path=os.path.join(MEDIA_ROOT/split_imagefile,file_name)
-            #         zip.write(file_path,file_name)
-
-            # #save zip file to database
-            # ZipimagePart.objects.create(zipfile=f'{new_folder_name}.zip')
-
-            # target_directory=MEDIA_ROOT
-            # shutil.move(zip_filename,os.path.join(target_directory,os.path.join(zip_filename)))
-
-            # zipimagepart=ZipimagePart.objects.all()
-
-            # pdf_file_instance.state=True
-            # pdf_file_instance.save(update_fields=['state'])
-
             return render(request=request,template_name='pdf_cut.html')
 
         image_file=ImageFile.objects.filter(state=True).all()

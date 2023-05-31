@@ -13,10 +13,9 @@ def index(request):
             return redirect('login')
         if request.user.user != UserChoices.OWNER:
             return redirect('staff_zip')
-    
-    
         try:
             pdfs=ImageFile.objects.all().order_by('-created_date')
+            pdfs_count=list(range(1,pdfs.count()+1))
             paginator=Paginator(pdfs,3)
             page_number=request.GET.get('page')
             page_obj=paginator.get_page(page_number)
@@ -28,10 +27,8 @@ def index(request):
             'pdfs':pdfs,
             'page_obj':page_obj,
             }
-        return render(
-        request=request,
-        template_name='index.html',
-        context=context)
+        
+        return render(request=request,template_name='index.html',context=context)
     except Exception as e:
         tg_alert.custom_alert(f"You didn't login from web-site: {e}")
 

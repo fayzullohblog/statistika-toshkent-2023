@@ -1,2 +1,3 @@
 # staff_zip.html filga, zip fillar bilan ihslayotgan edim
 # context_processors qilinnayogan edi: headern savatchasi uchun
+# create_zip.py bilan ishlanaoyatgan edi, yani delete qilingan fillarni xam zip fillarga qo'shib yuborayotgan edi,

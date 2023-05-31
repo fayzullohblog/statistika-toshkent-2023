@@ -15,9 +15,9 @@ class ImageFile(BaseModel):
        @property
        def pdfs_state(self):
               if self.state:
-                     return 'Tasdiqlangan'
+                     return 'Junatilgan'
               else:
-                     return "Tasdiqlanmagan"
+                     return "Junatilmagan"
        
               
        @property
@@ -31,7 +31,7 @@ class ImageFile(BaseModel):
               
 
 class ImagePart(models.Model):
-       imagefile=models.ForeignKey(ImageFile,related_name='imageparts', on_delete=models.SET_NULL,null=True)
+       imagefile=models.ForeignKey(ImageFile,related_name='imageparts', on_delete=models.CASCADE,null=True)
        oneimage=models.FileField(upload_to='oneimage')
        title=models.CharField(max_length=250,null=True,blank=True)
        created_date=models.DateTimeField(auto_now_add=True)

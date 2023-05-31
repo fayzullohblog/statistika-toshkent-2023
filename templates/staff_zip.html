@@ -1,7 +1,5 @@
 {% extends 'base.html' %}
 {% load static %}
-
-
 {% block content %}
 <!-- <div style="width:100%; background-color:#f2f2f2;margin-top:100px;"> -->
 <div class="container"style="margin-top:100px;">
@@ -130,36 +128,28 @@
           </form>
         </tbody>
       </table>
-  
 </div> 
-<!-- </div>            -->
-      <div class="container" style="display: flex; justify-content: center; margin-top: 50px;">
-            <div class="pagination">
-            <span class="step-links">
-                {% if page_obj.has_previous %}
-                    <a href="?page=1" style="color:rgb(189, 49, 14); background-color: lightblue; padding: 10px;">&laquo; Birinchi</a>
-
-                    <a  href="?page={{ page_obj.previous_page_number }}" style="padding:10px;background-color: darkblue; color: #fff;" >Oldingi&raquo;</a>
-                    {% endif %}
-            
-                    <span class="current">
-                      {{ page_obj.number }}-bet
-                  </span>
+<div class="container" style="display: flex; justify-content: center; margin-top: 50px; gap:1rem;">
+  <div class="pagination">
+    <span class="step-links">
+      {% if page_obj.has_previous %}
+        <a href="?page=1" class="circle btn btn-primary" style="padding: 10px 15px;">&laquo; Birinchi</a>
+        <a href="?page={{ page_obj.previous_page_number }}" class="circle btn btn-primary" style="padding: 10px 15px;">Oldingi&raquo;</a>
+      {% endif %}
+      <span class="current" style="background-color: lightblue; color: darkblue; padding: 10px;">
+        {{ page_obj.number }}-bet
+      </span>
+      {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}" class="circle btn btn-primary" style="padding: 10px 15px;">Keyingi &raquo;</a>
+        <a href="?page={{ page_obj.paginator.num_pages }}" class="circle btn btn-primary" style="padding: 10px 15px;">Oxirgi &raquo;</a>
+      {% endif %}
+    </span>
+    <hr>
+  </div>
+</div>
           
-                    {% if page_obj.has_next %}
-                        <a href="?page={{ page_obj.next_page_number }}" style="color:rgb(177, 32, 10); background-color: lightblue; padding: 10px;">&laquo;Keyingi</a>  
-                        <a href="?page={{ page_obj.paginator.num_pages }}" style="padding:10px;background-color:darkblue; color: #fff;">Oxirgi &raquo;</a>
-                    {% endif %}
-                </span> <hr>
-               
-              </div>
-          </div>
-          
-      <hr> <br>  <p>
-                    <b>Jami saxifa:</b> <b>{{ page_obj.paginator.num_pages }}</b>
-                </p>
-          
-    
-    
-          
-    {% endblock content %}
+<hr> <br> 
+ <p>
+<b>Jami saxifa:</b> <b>{{ page_obj.paginator.num_pages }}</b>
+</p>
+{% endblock content %}
