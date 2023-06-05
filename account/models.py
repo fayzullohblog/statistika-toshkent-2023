@@ -12,7 +12,7 @@ class Account(AbstractUser):
     password=models.CharField(max_length=100)
     email=models.EmailField(unique=True)
     first_name=models.CharField(max_length=50,null=True,blank=True)
-    degree=models.CharField(max_length=50)
+    degree=models.CharField(max_length=50,null=True,blank=True)
     
     EMAIL_FIELD = "password"
     USERNAME_FIELD='username'

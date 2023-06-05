@@ -1,9 +1,10 @@
 from django.urls import path
-from .views.index import index
+from .views.index import index,CreateGenericsApiView
 from .views.pdf_cut import PdfCutDjangoViews
 from .views.staff_zip import staff_zip
 from .views.page_delete import page_delete_view
 from .views.create_zip import create_zip_view
+
 
 
 urlpatterns = [
@@ -12,4 +13,5 @@ urlpatterns = [
     path('staff_zip/',staff_zip,name='staff_zip'),
     path('page_delete/',page_delete_view,name='page_delete'),
     path('pdf_cut/create_zip/',create_zip_view,name='create_zip'),
+    path('createimagefile/',CreateGenericsApiView.as_view(),name='creategenericapiview'),
 ]

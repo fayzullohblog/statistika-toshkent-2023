@@ -3,10 +3,22 @@ from common.alert import tg_alert
 from common.choose import UserChoices
 from django.core.paginator import Paginator
 from ..models import ImageFile
-
-
+from rest_framework.generics import GenericAPIView
+from rest_framework.mixins import CreateModelMixin
+from ..serializer import ImageFileSerializer
 # ---------------------------
-# Create your views here.    
+# Create your views here.
+# 
+
+class CreateGenericsApiView(CreateModelMixin,GenericAPIView):
+    serializer_class=ImageFileSerializer
+    queryset=ImageFile.objects.all()
+
+    def post(self,request,*args,**kwargs):
+        return self.create(request,*args,**kwargs)
+
+
+
 def index(request):
     try:
         if not request.user.is_authenticated:
