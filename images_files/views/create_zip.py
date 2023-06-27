@@ -19,14 +19,12 @@ def create_zip_view(request):
         imagepart=pdf_file_instance.imageparts.all()
         split_imagepart=[]
         for i in imagepart:
-             print('imageaport',i.oneimage)
              split_imagepart.append(str(i.oneimage).split('/')[1])
         
         split_imagefile=str(pdf_file_instance).split('/')[1]
         zip_filename=MEDIA_ROOT/f'{split_imagefile}.zip'
 
         # pdf_files=[f for f in os.listdir(MEDIA_ROOT/split_imagefile) if f.endswith('.pdf')]
-        # print('------3',pdf_files)
 
         with zipfile.ZipFile(zip_filename,'w',zipfile.ZIP_DEFLATED) as zip:
             for file_name in split_imagepart:

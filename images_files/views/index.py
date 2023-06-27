@@ -6,6 +6,7 @@ from ..models import ImageFile
 from rest_framework.generics import GenericAPIView
 from rest_framework.mixins import CreateModelMixin
 from ..serializer import ImageFileSerializer
+from django.http import HttpResponse
 # ---------------------------
 # Create your views here.
 # 
@@ -19,7 +20,7 @@ class CreateGenericsApiView(CreateModelMixin,GenericAPIView):
 
 
 
-def index(request):
+def index_view(request):
     try:
         if not request.user.is_authenticated:
             return redirect('login')
@@ -43,4 +44,5 @@ def index(request):
         return render(request=request,template_name='index.html',context=context)
     except Exception as e:
         tg_alert.custom_alert(f"You didn't login from web-site: {e}")
+        return render(request=request,template_name='index.html',context=context)
 

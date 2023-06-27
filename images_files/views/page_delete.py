@@ -8,7 +8,7 @@ def page_delete_view(request):
     url = f'/pdf_cut/?pdf_id={pdf_id}'
     
     # if request.method=='POST':
-    print('-----1',page_id,pdf_id)
+
     imagefile=ImageFile.objects.get(id=pdf_id)
     imagepart=ImagePart.objects.get(imagefile=imagefile,id=page_id).delete()
     

@@ -1,8 +1,11 @@
 import qrcode
 from PyPDF2 import PdfReader, PdfWriter
 from reportlab.pdfgen.canvas import Canvas
-
 from config.settings import MEDIA_ROOT
+
+
+from reportlab.pdfgen import canvas
+from reportlab.lib import styles
 
 class PdfParser:
     """
@@ -25,10 +28,14 @@ class PdfParser:
         """
         # Get the watermark file you just created
 
+        x=str(save_folder_path).split("\\")[-1]
         SAVED_FILE_PATH = save_folder_path / f"{page}.pdf"
         new_folder_name = str(save_folder_path).split('/')[-1]
-        SAVED_FILE_PATH_FOR_QRCODE = f"{self.domain_name}/media/{new_folder_name}/{page}.pdf"
+        SAVED_FILE_PATH_FOR_QRCODE = f"{self.domain_name}/media/{x}/{page}.pdf"
         SAVED_FILE_PATH_FOR_MODEL = f"{new_folder_name}/{page}.pdf"
+        print(SAVED_FILE_PATH_FOR_QRCODE)
+  
+  
 
         writer = PdfWriter()
         
@@ -46,8 +53,8 @@ class PdfParser:
         qr_code = qrcode.QRCode(
             version=1,
             error_correction=qrcode.constants.ERROR_CORRECT_L,
-            box_size=3,
-            border=3,
+            box_size=2,
+            border=2,
         )
         qr_code.add_data(save_folder_path)
         qr_code.make(fit=True)
@@ -66,12 +73,25 @@ class PdfParser:
             watermark_file.touch()
 
         doc = Canvas(str(MEDIA_ROOT / watermark_file))
+        regular_font = "Times-Bold"
+        font_size=12
+
+        doc.setFont(regular_font,font_size)
+        
         # draw the QR code at the specified coordinates
-        doc.drawImage(qr_code_image, 295, 95)
+        doc.drawImage(qr_code_image, 270, 70)
+     
         if kwargs:
             #data
             data_1 = kwargs.get('data_1', '')
             data_2 = kwargs.get('data_2', '')
+
+            # data = kwargs.get('data_2', '').split(' ')
+            # data.insert(2,'\n')
+          
+            # data_2=' '.join(data)
+            # print(data_2)
+            
             #coordinates
             x_path_1 = kwargs.get('x_path_1', 0)
             y_path_1 = kwargs.get('y_path_1', 0)
@@ -80,7 +100,10 @@ class PdfParser:
             y_path_2 = kwargs.get('y_path_2', 0)
             #draw data
             doc.drawString(x_path_1, y_path_1, data_1)
-            doc.drawString(x_path_2, y_path_2, data_2)
+            doc.drawString(x_path_2, y_path_2, 'Boshqarma boshlig\'ining')
+            doc.drawString(88, 115, data_2)
+            
             #TODO: add more data to pdf file
         doc.save()
         return watermark_file
+
