@@ -11,21 +11,22 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
-
+import environ
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+env=environ.Env()
 
-
+environ.Env.read_env()
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-fbk78riq(ha_6s4h$$k5se-s6i29($dlya(wp!!f9eooc8klsn'
+SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -79,17 +80,10 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
+import os, dj_database_url
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgresql',
-        'USER':'fayzulloabdullaev',
-        'PASSWORD':'00010003Ff',
-        'HOST':'127.0.0.1',
-        'PORT':'5432',
-
-    }
+    'default': dj_database_url.parse(env('DATABASE_URL'))
 }
 
 
@@ -133,7 +127,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 import os
 STATIC_URL = '/static/'
-STATICFILES_DIRS=[BASE_DIR/'static']
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
 
 MEDIA_URL='/media/'
 MEDIA_ROOT= BASE_DIR / 'media/'
