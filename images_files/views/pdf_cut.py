@@ -19,7 +19,7 @@ class PdfCutDjangoViews(View):
         if request.user.user != UserChoices.OWNER:
             return redirect('staff_zip')
         if request.user.degree is  None  and request.user.first_name is None:
-            return HttpResponse(f'Sizning  <b style="color:red;">Ism</b> va <b  style="color:red;">Darajangiz </b> admin panelga kirgizilmadi !!!! <br> <a href="http://127.0.0.1:8000/admin/">Admin Panelga o\'tish</a> ')
+            return HttpResponse(f'Sizning  <b style="color:red;">Ism</b> va <b  style="color:red;">Darajangiz </b> admin panelga kirgizilmadi !!!! <br> <a href="http://64.226.66.47:8000/admin/">Admin Panelga o\'tish</a> ')
 
         #TODO must check user is authenticated and user is admin or DIREKTOR becuase this page only for admin and direktor for security
         domain_name=request.META['HTTP_HOST']
