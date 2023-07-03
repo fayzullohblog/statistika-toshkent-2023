@@ -95,11 +95,11 @@ import os, dj_database_url
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'statis',
-        'USER': 'behzod',
-        'PASSWORD': 'behzod',
+        'NAME': 'namuna',
+        'USER': 'bexruz',
+        'PASSWORD': 'bexruz',
         'HOST': 'localhost',
-        'PORT': '5432',
+        'PORT': '',
     }
 }
 
@@ -144,12 +144,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 import os
 STATIC_URL = 'static/'
-# STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
-# STATIC_ROOT=BASE_DIR / 'static/'
-# STATICFILES_DIRS = [
-#     BASE_DIR / 'static/'
-# ]
-# STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 
 MEDIA_URL='/media/'
