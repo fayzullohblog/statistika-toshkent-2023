@@ -71,8 +71,8 @@
     {% for pdf in imagepart %}
         <div class="fillar">
           
-          <a href="http://64.226.66.478000{{ pdf.oneimage.url }}" class="ochish-button">Ochish</a> <br>
-          <a href="http://64.226.66.478000/page_delete/?pdf_id={{pdf_id}}&page_id={{ pdf.id }}" class="ochirish-button">O'chirish</a>
+          <a href="http://64.226.66.47:8000{{ pdf.oneimage.url }}" class="ochish-button">Ochish</a> <br>
+          <a href="http://64.226.66.47:8000/page_delete/?pdf_id={{pdf_id}}&page_id={{ pdf.id }}" class="ochirish-button">O'chirish</a>
             <br><b>{{ pdf.title }}</b>          
         </div>
      {% endfor %}
