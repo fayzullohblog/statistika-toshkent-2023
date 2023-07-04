@@ -81,7 +81,7 @@ class PdfParser:
         doc.setFont(regular_font,font_size)
         
         # draw the QR code at the specified coordinates
-        doc.drawImage(qr_code_image, 270, 70)
+        doc.drawImage(qr_code_image, 270, 80)
      
         if kwargs:
             #data
