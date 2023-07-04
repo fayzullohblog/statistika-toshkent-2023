@@ -84,7 +84,8 @@ WSGI_APPLICATION = 'config.wsgi.application'
 import os, dj_database_url
 
 # DATABASES = {
-#     'default': dj_database_url.parse(env('DATABASE_URL'))
+#  
+#    'default': dj_database_url.parse(env('DATABASE_URL'))
 # }
 # DATABASES = {
 #     'default': {

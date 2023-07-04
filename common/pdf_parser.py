@@ -31,11 +31,13 @@ class PdfParser:
         x=str(save_folder_path).split("\\")[-1]
         SAVED_FILE_PATH = save_folder_path / f"{page}.pdf"
         new_folder_name = str(save_folder_path).split('/')[-1]
-        SAVED_FILE_PATH_FOR_QRCODE = f"{self.domain_name}/media/{x}/{page}.pdf"
+        print('------1',new_folder_name)
+        SAVED_FILE_PATH_FOR_QRCODE = f"{self.domain_name}/media/{new_folder_name}/{page}.pdf"
         SAVED_FILE_PATH_FOR_MODEL = f"{new_folder_name}/{page}.pdf"
-        print(SAVED_FILE_PATH_FOR_QRCODE)
+        print('--------12',SAVED_FILE_PATH_FOR_QRCODE)
   
   
+
 
         writer = PdfWriter()
         
